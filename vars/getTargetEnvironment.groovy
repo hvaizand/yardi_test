@@ -1,5 +1,5 @@
 def call(targetbranch){
-    def targetbranch = targetbranch.toLowerCase()
+    targetbranch = targetbranch.toLowerCase()
     switch(targetbranch) {
         case "sandbox":
             targetbranch = 'Core Sandbox'
