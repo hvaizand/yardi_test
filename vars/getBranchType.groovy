@@ -1,21 +1,20 @@
 def call(changebranch){
-    def branchtype = changebranch.substring(0, changebranch.indexOf('/')).toLowerCase()
+    def changebranch.substring(0, changebranch.indexOf('/')).toLowerCase()
     switch(branchtype) {
         case "feature":
-            branchtype = 'feature'
+            'feature'
         break
         case "hotfix":
-            branchtype = 'hotfix'
+            'hotfix'
         break
         case "datafix":
-            branchtype = 'datafix'
+            'datafix'
         break
         case "release":
-            branchtype = 'release'
+            'release'
         break
         default:
-            branchtype = 'error'
+            'error'
         break
     }
-    return branchtype
 }
