@@ -2,19 +2,20 @@ def call(){
     def branchtype = CHANGE_BRANCH.substring(0, CHANGE_BRANCH.indexOf('/')).toLowerCase()
     switch(branchtype) {
         case "feature":
-            BRANCHTYPE = 'feature'
+            branchtype = 'feature'
         break
         case "hotfix":
-            BRANCHTYPE = 'hotfix'
+            branchtype = 'hotfix'
         break
         case "datafix":
-            BRANCHTYPE = 'datafix'
+            branchtype = 'datafix'
         break
         case "release":
-            BRANCHTYPE = 'release'
+            branchtype = 'release'
         break
         default:
-            BRANCHTYPE = 'error'
+            branchtype = 'error'
         break
     }
+    return branchtype
 }
