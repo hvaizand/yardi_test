@@ -1,5 +1,5 @@
 def call(changebranch){
-    def changebranch.substring(0, changebranch.indexOf('/')).toLowerCase()
+    def branchtype = changebranch.substring(0, changebranch.indexOf('/')).toLowerCase()
     switch(branchtype) {
         case "feature":
             'feature'
