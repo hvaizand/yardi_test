@@ -4,7 +4,7 @@ def call(LinkedHashMap config=null) {
       config = readYaml file: 'yardi_environments.yml'
     }
     catch (e) {
-      println "Environment variables skipped. Configuration not found."
+      echo "Environment variables skipped. Configuration not found."
       return
     }
   }
