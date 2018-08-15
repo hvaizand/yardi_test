@@ -1,7 +1,7 @@
 def call(LinkedHashMap config=null) {
   if (config == null) {
     try {
-      config = readYaml file: 'jenkins.yml'
+      config = readYaml file: 'yardi_environments.yml'
     }
     catch (e) {
       println "Environment variables skipped. Configuration not found."
