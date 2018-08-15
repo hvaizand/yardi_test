@@ -1,15 +1,18 @@
 def call(LinkedHashMap config=null) {
-  if (config == null) {
-    try {
-      config = readYaml file: 'yardi_environments.yml'
+    if (config == null) {
+        try {
+            config = readYaml file: 'yardi_environments.yml'
+        }
+        catch (e) {
+            echo "Environment variables skipped. Configuration not found."
+            return
+        }
     }
-    catch (e) {
-      echo "Environment variables skipped. Configuration not found."
-      return
+    if (fileExists("./Jenkinsfiles/yardi_environments.yml")) {
+        config = readYaml file: "./Jenkinsfiles/yardi_environments.yml"
+        echo "config ==> ${config}"
     }
-  }
-  for (var in config.environment) {
-    echo "Key: ${var.key} - value: ${var.value}"
-    env[var.key] = var.value
-  }
+    else {
+        config = []
+    }
 }
