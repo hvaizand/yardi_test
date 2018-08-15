@@ -9,6 +9,7 @@ def call(LinkedHashMap config=null) {
     }
   }
   for (var in config.environment) {
+    echo "Key: ${var.key} - value: ${var.value}"
     env[var.key] = var.value
   }
 }
