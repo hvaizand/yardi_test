@@ -1,7 +1,8 @@
-def call(LinkedHashMap config=null, file) {
-  if (config == null) {
+def call(LinkedHashMap config=null) {
+  if (config.file != null) {
     try {
-      config = readYaml file: "${file}"
+      config = readYaml file: config.file
+      echo "config ==> ${config}"
     }
     catch (e) {
       echo "Environment variables skipped. Configuration not found."
