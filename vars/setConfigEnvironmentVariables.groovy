@@ -8,9 +8,12 @@ def call(LinkedHashMap config=null) {
       return
     }
   }
-  config = readYaml file: 'yardi_environments.yml'
-  for (var in config.environment) {
-    echo "Key: ${var.key} - value: ${var.value}"
-    env[var.key] = var.value
+  else if (fileExists("./Jenkinsfiles/yardi_environments.yml")) {
+      config = readYaml file: "./Jenkinsfiles/yardi_environments.yml"
+      echo "config ==> ${config}"
   }
+  else {
+      config = []
+  }
+  return config
 }
