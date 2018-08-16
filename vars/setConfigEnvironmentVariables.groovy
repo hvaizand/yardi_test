@@ -8,6 +8,7 @@ def call(LinkedHashMap config=null) {
       return
     }
   }
+  config = readYaml file: 'yardi_environments.yml'
   for (var in config.environment) {
     echo "Key: ${var.key} - value: ${var.value}"
     env[var.key] = var.value
