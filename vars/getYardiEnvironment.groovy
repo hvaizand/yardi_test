@@ -7,11 +7,11 @@ def call(){
     for (label in pullRequest.labels) {
         switch(label) {
             case 'Core':
-                environment.module = 'unknown'
+                environment.module = 'core'
                 countmodule += 1
             break
             case 'ABF':
-                environment.module = 'unknown'
+                environment.module = 'abf'
                 countmodule += 1
             break
             case 'Sandbox':
