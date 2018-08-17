@@ -1,7 +1,8 @@
 def call(){
     //Check labels
-    def environment.module = 'unknown'
-    def environment.name = 'unknown'
+    def environment
+    environment.module = 'unknown'
+    environment.name = 'unknown'
     def countmodule = 0
     def countname = 0
     for (label in pullRequest.labels) {
