@@ -1,6 +1,6 @@
 def call(){
     //Check labels
-    def environment
+    Map environment
     environment.module = 'unknown'
     environment.name = 'unknown'
     def countmodule = 0
