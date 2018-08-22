@@ -1,4 +1,4 @@
-def call(LinkHashMap environment){
+def call(environment){
     //Check labels
     //def environment = [name: 'unknown', module: 'unknown']
     def countmodule = 0
