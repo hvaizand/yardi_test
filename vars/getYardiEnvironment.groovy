@@ -1,6 +1,6 @@
-def call(){
+def call(LinkHashMap environment){
     //Check labels
-    def environment = [name: 'unknown', module: 'unknown']
+    //def environment = [name: 'unknown', module: 'unknown']
     def countmodule = 0
     def countname = 0
     for (label in pullRequest.labels) {
