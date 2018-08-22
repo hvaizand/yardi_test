@@ -37,13 +37,13 @@ def call(environment){
                 environment.name = 'uat'
                 countname += 1
             break
-            case 'CI: Skip'
+            case 'CI: Skip':
                 environment.citype = 'skip'
             break
-            case 'CI: Test'
+            case 'CI: Test':
                 environment.citype = 'test'
             break
-            case 'CI: Retest'
+            case 'CI: Retest':
                 environment.citype = 'test'
             break
         }
