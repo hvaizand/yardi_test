@@ -5,37 +5,46 @@ def call(environment){
     def countname = 0
     for (label in pullRequest.labels) {
         switch(label) {
-            case 'Core':
+            case 'Module: Core':
                 environment.module = 'core'
                 countmodule += 1
             break
-            case 'ABF':
+            case 'Module: ABF':
                 environment.module = 'abf'
                 countmodule += 1
             break
-            case 'Sandbox':
+            case 'Environment: Sandbox':
                 environment.name = 'sandbox'
                 countname += 1
             break
-            case 'Development':
+            case 'Environment: Development':
                 environment.name = 'dev'
                 countname += 1
             break
-            case 'Beta':
+            case 'Environment: Beta':
                 environment.name = 'beta'
                 countname += 1
             break
-            case 'Test':
+            case 'Environment: Test':
                 environment.name = 'test'
                 countname += 1
             break
-            case '2k16':
+            case 'Environment: 2k16':
                 environment.name = '2k16'
                 countname += 1
             break
-            case 'UAT':
+            case 'Environment: UAT':
                 environment.name = 'uat'
                 countname += 1
+            break
+            case 'CI: Skip'
+                environment.citype = 'skip'
+            break
+            case 'CI: Test'
+                environment.citype = 'test'
+            break
+            case 'CI: Retest'
+                environment.citype = 'test'
             break
         }
     }
