@@ -47,7 +47,7 @@ def call(environment){
                 environment.citype = 'test'
             break
         }
-        environment.listLabels += label
+        environment.listLabels.add(label)
     }
     if(countmodule>1) {
         environment.module = 'multiple'
