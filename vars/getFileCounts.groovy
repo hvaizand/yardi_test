@@ -1,7 +1,5 @@
 def call(countFiles){
-    if (!fileExists("${WORKSPACE}\\pldpkgload.pkglist")){
-        fileOperations([fileCreateOperation(fileContent: '', fileName: "${WORKSPACE}\\pldpkgload.pkglist")])
-    }
+    def pkgfile = touch "${WORKSPACE}\\pldpkgload.pkglist"
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
@@ -9,7 +7,7 @@ def call(countFiles){
         switch(ext) {
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
-                writeFile file: "${WORKSPACE}\\pldpkgload.pkglist", text: "${file}"
+                writeFile file: pkgfile, text: file
                 countFiles.countpkg += 1
             break
             case "txt":
