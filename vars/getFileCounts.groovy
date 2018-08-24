@@ -9,7 +9,7 @@ def call(countFiles){
         switch(ext) {
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
-                writeFile file: "${WORKSPACE}\\pldpkgload.pkglist", text: commitFile.filename
+                writeFile file: "${WORKSPACE}\\pldpkgload.pkglist", text: "${file}"
                 countFiles.countpkg += 1
             break
             case "txt":
