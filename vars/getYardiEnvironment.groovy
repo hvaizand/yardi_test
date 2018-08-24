@@ -37,15 +37,19 @@ def call(environment){
                 environment.name = 'uat'
                 countname += 1
             break
-            case 'CI: Skip':
-                environment.citype = 'skip'
-            break
-            case {'CI: Test'&&(environment.citype!='skip')}:
-                environment.citype = 'test'
-            break
-            case {'CI: Retest'&&(environment.citype!='skip')}:
-                environment.citype = 'test'
-            break
+        }
+        if(environment.citype!='skip'){
+            switch(label){
+                case 'CI: Skip':
+                    environment.citype = 'skip'
+                break
+                case 'CI: Test':
+                    environment.citype = 'test'
+                break
+                case 'CI: Retest':
+                    environment.citype = 'test'
+                break
+            }
         }
         environment.listLabels.add(label)
     }
