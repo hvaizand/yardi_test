@@ -25,4 +25,7 @@ def call(countFiles){
             break
         }
     }
+    debugMessage "Number of pkg: ", countFiles.countpkg
+    debugMessage "Number of report files: ", countFiles.countrpt
+    debugMessage "Number of others: ", countFiles.countother
 }
