@@ -41,3 +41,9 @@ def get_target_script() {
         'Unable to determine the target script from the branch name.'
     )
 }
+
+def debugMessage(variable, value){
+    if(params.debug){
+        echo "${variable} ==> ${value}"
+    }
+}
