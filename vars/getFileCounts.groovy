@@ -6,6 +6,7 @@ def call(countFiles){
         switch(ext) {
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
+                writeFile file: "pldpkgload.pkglist", text: "${commitFile.filename}"
                 countFiles.countpkg += 1
             break
             case "txt":
@@ -24,7 +25,6 @@ def call(countFiles){
                 countFiles.countother += 1
             break
         }
-        pullRequest.files.extension = ext
     }
     debugMessage "Number of pkg: ", countFiles.countpkg
     debugMessage "Number of report files: ", countFiles.countrpt
