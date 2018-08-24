@@ -1,4 +1,4 @@
-def call(countFiles){
+def call(countFiles, deploy){
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
@@ -6,6 +6,9 @@ def call(countFiles){
         switch(ext) {
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
+                if(deploy){
+                    loadPackage commitFile.filename
+                }
                 countFiles.countpkg += 1
             break
             case "txt":
