@@ -38,7 +38,7 @@ def call(environment){
                 countname += 1
             break
         }
-        if(environment.citype!='skip'){
+        if(environment.citype!='skip' && environment.citype!='force'){
             switch(label){
                 case 'CI: Skip':
                     environment.citype = 'skip'
@@ -48,6 +48,9 @@ def call(environment){
                 break
                 case 'CI: Retest':
                     environment.citype = 'test'
+                break
+                case 'CI: Force':
+                    environment.citype = 'force'
                 break
             }
         }
