@@ -40,10 +40,10 @@ def call(environment){
             case 'CI: Skip':
                 environment.citype = 'skip'
             break
-            case 'CI: Test':
+            case {'CI: Test'&&(environment.citype!='skip')}:
                 environment.citype = 'test'
             break
-            case 'CI: Retest':
+            case {'CI: Retest'&&(environment.citype!='skip')}:
                 environment.citype = 'test'
             break
         }
