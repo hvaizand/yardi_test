@@ -1,5 +1,5 @@
 def call(countFiles){
-    if (!fileExists "${WORKSPACE}\\pldpkgload.pkglist"){
+    if (!fileExists("${WORKSPACE}\\pldpkgload.pkglist"){
         fileOperations([fileCreateOperation(fileContent: '', fileName: "${WORKSPACE}\\pldpkgload.pkglist")])
     }
     for (commitFile in pullRequest.files) {
