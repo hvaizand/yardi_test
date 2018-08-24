@@ -24,6 +24,7 @@ def call(countFiles){
                 countFiles.countother += 1
             break
         }
+        pullRequest.files.extension = ext
     }
     debugMessage "Number of pkg: ", countFiles.countpkg
     debugMessage "Number of report files: ", countFiles.countrpt
