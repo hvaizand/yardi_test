@@ -47,6 +47,7 @@ def call(environment){
                 environment.citype = 'test'
             break
         }
+        environment.listLabels += label
     }
     if(countmodule>1) {
         environment.module = 'multiple'
@@ -55,7 +56,9 @@ def call(environment){
         environment.name = 'multiple'
     }
     //Check target branch
+    environment.targetBranch = getTargetEnvironment CHANGE_TARGET
 
+    environment.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
 
     return environment
 }
