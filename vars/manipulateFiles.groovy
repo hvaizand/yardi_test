@@ -7,7 +7,7 @@ def call(countFiles, deploy, config){
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
                 if(deploy){
-                    loadPackage commitFile.filename config
+                    loadPackage commitFile.filename, config
                 }
                 countFiles.countpkg += 1
             break
