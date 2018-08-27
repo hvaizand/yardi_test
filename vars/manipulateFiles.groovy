@@ -2,12 +2,15 @@ def call(countFiles, deploy, config){
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
+        def fileFullPath = commitFile
+        fileFullPath = "${WORKSPACE}\\" + translatePath(fileFullPath)
+//        fileFullPath = "${WORKSPACE}\\" + fileFullPath
         def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
         switch(ext) {
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
                 if(deploy){
-                    loadPackage commitFile.filename, config 
+                    loadPackage fileFullPath, config 
 //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
                 }
                 countFiles.countpkg += 1
