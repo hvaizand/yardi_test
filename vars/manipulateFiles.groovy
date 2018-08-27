@@ -3,8 +3,8 @@ def call(countFiles, deploy, config){
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
         def fileFullPath = commitFile
-        fileFullPath = "${WORKSPACE}\\" + translatePath(fileFullPath)
-//        fileFullPath = "${WORKSPACE}\\" + fileFullPath
+        fileFullPath = translatePath(fileFullPath)
+        fileFullPath = "${WORKSPACE}\\" + fileFullPath
         def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
         switch(ext) {
             case "pkg":
