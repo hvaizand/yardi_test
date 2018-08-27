@@ -7,7 +7,8 @@ def call(countFiles, deploy, config){
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
                 if(deploy){
-                    loadPackage commitFile.filename, config
+//                    loadPackage commitFile.filename, config
+                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
                 }
                 countFiles.countpkg += 1
             break
