@@ -1,4 +1,6 @@
+@NonCPS
 def call(countFiles, deploy, config){
+//    for (int i = 0; i < pullRequest.files.size(); i++) {
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
