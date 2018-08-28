@@ -1,4 +1,4 @@
-def call(Closure body){
+def call(body){
     bat script: body
 }
 // def call(fileName, dbo_credentials, db_server, db_name){
