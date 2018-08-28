@@ -1,3 +1,4 @@
+@NonCPS
 def call(fileName, dbo_credentials, db_server, db_name){
     withCredentials([usernamePassword(credentialsId: dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
         echo "file name: ${fileName}"
