@@ -1,4 +1,4 @@
-@NonCPS
+//@NonCPS
 def call(counterFiles, deploy, config){
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
