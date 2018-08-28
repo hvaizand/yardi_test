@@ -15,15 +15,16 @@ def call(counterFiles, deploy, config){
             switch(ext) {
                 case "pkg":
                     debugMessage "This is a package. The extension is ", ext
-                    if(deploy=='true'){
-                        loadPackage "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
+                    // if(deploy=='true'){
+                        // loadPackage "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
     //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
     //                         echo "file name: ${fileFullPath}"
     //                         echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
     //                         bat script: "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
     //                     }
-                    }
+                    // }
                     counterFiles.countpkg += 1
+                    filePackage[counterFiles.countpkg] = fileFullPath
                 break
                 case "txt":
                 case "inc":
@@ -35,10 +36,12 @@ def call(counterFiles, deploy, config){
                 case "rdlc":
                     debugMessage "This is a report file. The extension is ", ext
                     counterFiles.countrpt += 1
+                    fileReport[counterFiles.countrpt] = fileFullPath
                 break
                 default:
                     debugMessage "This is another file. The extension is ", ext
                     counterFiles.countother += 1
+                    fileOther[counterFiles.countother] = fileFullPath
                 break
             }
         }
