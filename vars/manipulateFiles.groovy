@@ -10,8 +10,13 @@ def call(countFiles, deploy, config){
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
                 if(deploy){
-                    loadPackage fileFullPath, config.dbo_credentials, config.db_server, config.db_name
+//                    loadPackage fileFullPath, config.dbo_credentials, config.db_server, config.db_name
 //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
+                    withCredentials([usernamePassword(credentialsId: dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
+                        echo "file name: ${fileFullPath}"
+                        echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
+                        bat script: "sqlcmd -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${config.db_server} -d ${config.db_name} -r1 -b -f 65001 -i ${fileFullPath}"
+                    }
                 }
                 countFiles.countpkg += 1
             break
