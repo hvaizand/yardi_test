@@ -2,7 +2,7 @@ def call(countFiles, deploy, config){
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
-        def fileFullPath = commitFile
+        def fileFullPath = commitFile.filename
         fileFullPath = translatePath(fileFullPath)
         fileFullPath = "${WORKSPACE}\\" + fileFullPath
         def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
