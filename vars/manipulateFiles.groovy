@@ -1,4 +1,4 @@
-//@NonCPS
+@NonCPS
 def call(counterFiles, deploy, config){
     withCredentials([usernamePassword(credentialsId: config.dbo_credentials, passwordVariable: 'dbPassword', usernameVariable: 'dbUserName')]) {
     //    for(int i = 0; i < pullRequest.files.size(); i++) {
