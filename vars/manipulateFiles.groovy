@@ -1,5 +1,7 @@
 @NonCPS
 def call(counterFiles, deploy, config){
+    def dbServer = config.db_server
+    def dbName = config.db_name
     withCredentials([usernamePassword(credentialsId: config.dbo_credentials, passwordVariable: 'dbPassword', usernameVariable: 'dbUserName')]) {
     //    for(int i = 0; i < pullRequest.files.size(); i++) {
         for (commitFile in pullRequest.files) {
@@ -16,10 +18,10 @@ def call(counterFiles, deploy, config){
                     debugMessage "This is a package. The extension is ", ext
                     if(deploy){
     //                    loadPackage fileFullPath, config.dbo_credentials, config.db_server, config.db_name
-                        echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
+    //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
     //                         echo "file name: ${fileFullPath}"
     //                         echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
-                             bat script: "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${config.db_server} -d ${config.db_name} -r1 -b -f 65001 -i ${fileFullPath}"
+                             bat script: "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
     //                     }
                     }
                     counterFiles.countpkg += 1
