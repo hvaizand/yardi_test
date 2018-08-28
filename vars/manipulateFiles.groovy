@@ -1,4 +1,3 @@
-@NonCPS
 def call(counterFiles, deploy, config){
     def dbServer = config.db_server
     def dbName = config.db_name
