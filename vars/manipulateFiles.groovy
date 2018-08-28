@@ -1,5 +1,5 @@
 @NonCPS
-def call(countFiles, deploy, config){
+def call(counterFiles, deploy, config){
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
@@ -21,7 +21,7 @@ def call(countFiles, deploy, config){
                     //     bat script: "sqlcmd -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${config.db_server} -d ${config.db_name} -r1 -b -f 65001 -i ${fileFullPath}"
 //                     }
                 }
-                countFiles.countpkg += 1
+                counterFiles.countpkg += 1
             break
             case "txt":
             case "inc":
@@ -32,16 +32,16 @@ def call(countFiles, deploy, config){
             case "xlsm":
             case "rdlc":
                 debugMessage "This is a report file. The extension is ", ext
-                countFiles.countrpt += 1
+                counterFiles.countrpt += 1
             break
             default:
                 debugMessage "This is another file. The extension is ", ext
-                countFiles.countother += 1
+                counterFiles.countother += 1
             break
         }
     }
-    debugMessage "Number of pkg: ", countFiles.countpkg
-    debugMessage "Number of report files: ", countFiles.countrpt
-    debugMessage "Number of others: ", countFiles.countother
-    return countFiles
+    debugMessage "Number of pkg: ", counterFiles.countpkg
+    debugMessage "Number of report files: ", counterFiles.countrpt
+    debugMessage "Number of others: ", counterFiles.countother
+    return counterFiles
 }
