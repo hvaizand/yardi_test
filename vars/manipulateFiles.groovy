@@ -16,11 +16,11 @@ def call(counterFiles, deploy, config){
                 case "pkg":
                     debugMessage "This is a package. The extension is ", ext
                     if(deploy){
-    //                    loadPackage fileFullPath, config.dbo_credentials, config.db_server, config.db_name
+                        loadPackage "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
     //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
     //                         echo "file name: ${fileFullPath}"
     //                         echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
-                             bat script: "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
+    //                         bat script: "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
     //                     }
                     }
                     counterFiles.countpkg += 1
