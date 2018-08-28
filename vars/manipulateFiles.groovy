@@ -10,7 +10,7 @@ def call(countFiles, deploy, config){
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
                 if(deploy){
-                    loadPackage fileFullPath, config 
+                    loadPackage fileFullPath, config.dbo_credentials, config.db_server, config.db_name
 //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
                 }
                 countFiles.countpkg += 1
