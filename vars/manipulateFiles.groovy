@@ -15,7 +15,7 @@ def call(counterFiles, deploy, config){
             switch(ext) {
                 case "pkg":
                     debugMessage "This is a package. The extension is ", ext
-                    if(deploy){
+                    if(deploy=='true'){
                         loadPackage "sqlcmd -U ${dbUserName} -P ${dbPassword} -S ${dbServer} -d ${dbName} -r1 -b -f 65001 -i ${fileFullPath}"
     //                    echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
     //                         echo "file name: ${fileFullPath}"
