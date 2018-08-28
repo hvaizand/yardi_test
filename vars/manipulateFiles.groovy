@@ -19,7 +19,7 @@ def call(counterFiles, deploy, config){
                         echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
     //                         echo "file name: ${fileFullPath}"
     //                         echo "Creds: ${config.dbo_credentials} - DB Server: ${config.db_server} - DB Name: ${config.db_name}"
-                        //     bat script: "sqlcmd -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${config.db_server} -d ${config.db_name} -r1 -b -f 65001 -i ${fileFullPath}"
+                             bat script: "sqlcmd -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${config.db_server} -d ${config.db_name} -r1 -b -f 65001 -i ${fileFullPath}"
     //                     }
                     }
                     counterFiles.countpkg += 1
