@@ -1,5 +1,5 @@
 @NonCPS
-def call(countFiles, deploy, config){
+def call(deploy, config){
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
