@@ -1,3 +1,4 @@
+@nonCPS
 def call(fileName, LinkedHashMap config){
     withCredentials([usernamePassword(credentialsId: config.dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
         echo "file name: ${fileName}"
