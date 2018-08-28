@@ -1,13 +1,14 @@
 @NonCPS
 def call(countFiles, deploy, config){
-//    for (int i = 0; i < pullRequest.files.size(); i++) {
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
         def file = commitFile.filename.toLowerCase()
+        debugMessage "File name lowercase: ", file
         def fileFullPath = commitFile.filename
-        fileFullPath = translatePath(fileFullPath)
-        fileFullPath = "${WORKSPACE}\\" + fileFullPath
+        fileFullPath = translatePath("${WORKSPACE}\\" + fileFullPath)
+        debugMessage "File name full path: ", fileFullPath
         def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
+        debugMessage "File extension: ", ext
         switch(ext) {
             case "pkg":
                 debugMessage "This is a package. The extension is ", ext
