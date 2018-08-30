@@ -6,4 +6,5 @@ def call(listFiles, fileName) {
         echo "File name: ${filName} - Value: ${item}\n"
         writeFile encoding: 'UTF-8', file: "${fileName}", text: "${item}\n"
     }
+    return listFiles
 }
