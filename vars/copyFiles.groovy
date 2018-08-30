@@ -1,5 +1,5 @@
-def call(fileName, targetPath){
-    withCredentials([usernamePassword(credentialsId: dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
+def call(fileName, targetPath, rdp_credentials){
+    withCredentials([usernamePassword(credentialsId: rdp_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
     //    for(int i = 0; i < fileName.size(); i++) {
     //         echo "Copy report: ${fileName.[i]}"
         for (def e in mapToList(fileName)){
