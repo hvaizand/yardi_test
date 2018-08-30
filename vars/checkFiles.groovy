@@ -1,6 +1,6 @@
 def call(fileType){
     def counterFiles = 0
-    def fileDetails
+    def fileDetails = [:]
     //    for(int i = 0; i < pullRequest.files.size(); i++) {
     for (commitFile in pullRequest.files) {
         debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
