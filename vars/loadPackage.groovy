@@ -5,6 +5,7 @@ def call(fileList, dbo_credentials, db_server, db_name){
     withCredentials([usernamePassword(credentialsId: dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
 //        for (def e in mapToFile(fileList, env.WORKSPACE'\\pldpkgload.pkglist')){
 //        for(int i = 0; i < fileList.size(); i++) {
+            echo "List of packages: ${fileList}"
             def e = mapToFile(fileList, "pldpkgload.pkglist")
             echo "List of packages: ${e}"
 //            echo "Load ${e.size()} package(s)"
