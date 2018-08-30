@@ -7,7 +7,6 @@ def call(fileList, dbo_credentials, db_server, db_name){
 //        for(int i = 0; i < fileList.size(); i++) {
             echo "List of packages: ${fileList}"
             def e = mapToFile(fileList, "pldpkgload.pkglist")
-            echo "List of packages: ${e}"
 //            echo "Load ${e.size()} package(s)"
             bat returnStdout: true, script: "C:\\Utils\\pldpkgload.exe -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${db_server} -d ${db_name} -r1 -b -f 65001 -i \"${WORKSPACE}\\pldpkgload.pkglist\""
 //       }
