@@ -12,6 +12,6 @@ def call(listFiles, fileName) {
         listFilesString += "${item}\n"
         echo "List file string: ${listFilesString}"
     }
-    writeFile encoding: 'UTF-8', file: "${fileName}", text: "${listFileString}"
+    writeFile encoding: 'UTF-8', file: "${fileName}", text: "${listFilesString}"
 //    return listFiles
 }
