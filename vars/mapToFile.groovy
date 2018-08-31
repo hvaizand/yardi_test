@@ -7,8 +7,8 @@ def call(listFiles, fileName) {
     for(def item in listFiles){
         echo "File name: ${fileName} - Value: ${item}\n"
 //        item.substring(commitFile.filename.lastIndexOf('=') + 1, item.length())
-        file = "${item}"
-        filePath = file.substring(file.indexOf('=') + 1, file.length())
+//        file = "${item}"
+        filePath = "${item}".substring("${item}".indexOf('=') + 1, "${item}".length())
         echo "File path: ${filePath}"
         listFilesString += "${filePath}\n"
 //        listFilesString += "${item}\n"
