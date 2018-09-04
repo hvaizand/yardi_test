@@ -3,8 +3,8 @@ def call(){
 //    def causes = currentBuild.rawBuild.getCauses()
 //    echo "Cause: ${causes}"
     def triggerCause = currentBuild.rawBuild.getCause(org.jenkinsci.plugins.pipeline.github.trigger.IssueCommentCause)
-    echo "${triggerCause}"
-    def cause
+    echo "${triggerCause.userLogin} - ${triggerCause.comment} - ${triggerCause.triggerPattern}"
+    def cause = ''
     if (triggerCause) {
         cause = "Build was started by ${triggerCause.userLogin}, who wrote: " +
             "\"${triggerCause.comment}\", which matches the " +
