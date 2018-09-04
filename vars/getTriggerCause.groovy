@@ -7,7 +7,7 @@ def call(){
     if (triggerCause) {
         cause = "Build was started by ${triggerCause.userLogin}, who wrote: " +
             "\"${triggerCause.comment}\", which matches the " +
-            "\"${triggerCause.triggerPattern}\" trigger pattern.")
+            "\"${triggerCause.triggerPattern}\" trigger pattern."
     } else {
         cause = 'Build was not started by a trigger'
     }
