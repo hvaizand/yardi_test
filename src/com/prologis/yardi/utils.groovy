@@ -17,6 +17,5 @@ def mapDrive(config){
 }
 
 def unmapDrive(config){
-        bat returnStdout: true, script: "NET USE * /del /y"
-    }
+    bat returnStdout: true, script: "NET USE * /del /y"
 }
