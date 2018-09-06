@@ -47,7 +47,8 @@ def mapDrive(config){
 
 // Unmap netwrok drive
 def unmapDrive(config){
-    def mapStatus = bat returnStatus: true, script: "NET USE ${config.drive_letter}: /del /y"
+    if
+    def mapStatus = bat returnStatus: true, script: "if exist ${config.drive_letter}:\\ (NET USE ${config.drive_letter}: /del /y)"
     if(mapStatus!=0){
         currentBuild.result = 'UNSTABLE'
         def message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
