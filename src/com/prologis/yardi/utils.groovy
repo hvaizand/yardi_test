@@ -32,7 +32,7 @@ def mapToFile(listFiles, fileName) {
 // Map network drive
 def mapDrive(config){
     withCredentials([usernamePassword(credentialsId: params.RdpUser, passwordVariable: 'RDPPASSWORD', usernameVariable: 'RDPUSERID')]) {
-        echo "NET USE ${config.drive_letter} \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
+        echo "NET USE ${config.drive_letter}: \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
         def mapStatus = bat returnStatus: true, script: "NET USE ${config.drive_letter}: \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
         if(mapStatus!=0){
             currentBuild.result = 'UNSTABLE'
@@ -46,8 +46,8 @@ def mapDrive(config){
 }
 
 // Unmap netwrok drive
-def unmapDrive(){
-    def mapStatus = bat returnStatus: true, script: "NET USE * /del /y"
+def unmapDrive(config){
+    def mapStatus = bat returnStatus: true, script: "NET USE ${config.drive_letter}: /del /y"
     if(mapStatus!=0){
         currentBuild.result = 'UNSTABLE'
         def message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
