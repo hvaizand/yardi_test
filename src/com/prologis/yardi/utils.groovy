@@ -31,15 +31,16 @@ def mapToFile(listFiles, fileName) {
 
 // Map network drive
 def mapDrive(config){
+    def message = ''
     withCredentials([usernamePassword(credentialsId: params.RdpUser, passwordVariable: 'RDPPASSWORD', usernameVariable: 'RDPUSERID')]) {
         echo "NET USE ${config.drive_letter}: \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
         def mapStatus = bat returnStatus: true, script: "NET USE ${config.drive_letter}: \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
         if(mapStatus!=0){
             currentBuild.result = 'UNSTABLE'
-            def message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
+            message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
         } else {
             debugMessage "mapDrive - Map network drive", mapStatus
-            def message = "Successful"
+            message = "Successful"
         }
     }
     return message
@@ -47,13 +48,14 @@ def mapDrive(config){
 
 // Unmap netwrok drive
 def unmapDrive(config){
+    def message = ''
     def mapStatus = bat returnStatus: true, script: "if exist ${config.drive_letter}:\\ (NET USE ${config.drive_letter}: /del /y)"
     if(mapStatus!=0){
         currentBuild.result = 'UNSTABLE'
-        def message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
+        message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
     } else {
         debugMessage "unmapDrive - Unmap network drive", mapStatus
-            def message = "Successful"
+        message = "Successful"
     }
     return message
 }
