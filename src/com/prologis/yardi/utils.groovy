@@ -1,5 +1,5 @@
 #!/usr/bin/groovy
-package com.prologis.yardi;
+package com.prologis.yardi
 
 @NonCPS
 def mapToList(depmap) {
@@ -16,6 +16,6 @@ def mapDrive(config){
     }
 }
 
-def unmapDrive(config){
+def unmapDrive(){
     bat returnStdout: true, script: "NET USE * /del /y"
 }
