@@ -47,7 +47,6 @@ def mapDrive(config){
 
 // Unmap netwrok drive
 def unmapDrive(config){
-    if
     def mapStatus = bat returnStatus: true, script: "if exist ${config.drive_letter}:\\ (NET USE ${config.drive_letter}: /del /y)"
     if(mapStatus!=0){
         currentBuild.result = 'UNSTABLE'
