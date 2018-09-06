@@ -36,11 +36,13 @@ def mapDrive(config){
         def mapStatus = bat returnStatus: true, script: "NET USE ${config.drive_letter}: \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
         if(mapStatus!=0){
             currentBuild.result = 'UNSTABLE'
-            notification.message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
+            def message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
         } else {
             debugMessage "mapDrive - Map network drive", mapStatus
+            def message = "Successful"
         }
     }
+    return message
 }
 
 // Unmap netwrok drive
@@ -48,8 +50,10 @@ def unmapDrive(){
     def mapStatus = bat returnStatus: true, script: "NET USE * /del /y"
     if(mapStatus!=0){
         currentBuild.result = 'UNSTABLE'
-        notification.message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
+        def message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
     } else {
         debugMessage "unmapDrive - Unmap network drive", mapStatus
+            def message = "Successful"
     }
+    return message
 }
