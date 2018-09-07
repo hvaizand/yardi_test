@@ -20,11 +20,11 @@ def mapToFileUtils(listFiles, fileName) {
     def listFilesString = ''
     def filePath
     for(def entry2 in listFiles){
-        debugMessage "utils.mapToFile - entry2", "${entry2}"
         filePath = "${entry2}".substring("${entry2}".indexOf('=') + 1, "${entry2}".length())
-        debugMessage "utils.mapToFile - File path:", "${filePath}"
         listFilesString += "${filePath}\n"
-        debugMessage "utils.mapToFile - List file string:", "${listFilesString}"
+//        debugMessage "utils.mapToFile - entry2", "${entry2}"
+//        debugMessage "utils.mapToFile - File path:", "${filePath}"
+//        debugMessage "utils.mapToFile - List file string:", "${listFilesString}"
     }
     writeFile encoding: 'UTF-8', file: "${fileName}", text: "${listFilesString}"
 }
