@@ -15,7 +15,7 @@ def mapToList(depmap) {
 
 //Create file with content of groovy list
 @NonCPS
-def mapToFile(listFiles, fileName) {
+def mapToFileUtils(listFiles, fileName) {
     debugMessage "mapToFile - List of files", "${listFiles}"
     def listFilesString = ''
     def filePath
