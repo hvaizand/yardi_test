@@ -6,7 +6,7 @@ package com.prologis.yardi
 def mapToList(depmap) {
     def dlist = []
     for (def entry2 in depmap) {
-        debugMessage "mapToList", entry2.value
+        debugMessage "utils.mapToList", entry2.value
         //dlist.add(new java.util.AbstractMap.SimpleImmutableEntry(entry2.key, entry2.value))
         dlist.add(entry2.value)
     }
@@ -16,15 +16,15 @@ def mapToList(depmap) {
 //Create file with content of groovy list
 @NonCPS
 def mapToFileUtils(listFiles, fileName) {
-    debugMessage "mapToFile - List of files", "${listFiles}"
+    debugMessage "utils.mapToFile - List of files", "${listFiles}"
     def listFilesString = ''
     def filePath
     for(def entry2 in listFiles){
-        debugMessage "mapToFile - entry2", "${entry2}"
+        debugMessage "utils.mapToFile - entry2", "${entry2}"
         filePath = "${entry2}".substring("${entry2}".indexOf('=') + 1, "${entry2}".length())
-        debugMessage "mapToFile - File path:", "${filePath}"
+        debugMessage "utils.mapToFile - File path:", "${filePath}"
         listFilesString += "${filePath}\n"
-        debugMessage "mapToFile - List file string:", "${listFilesString}"
+        debugMessage "utils.mapToFile - List file string:", "${listFilesString}"
     }
     writeFile encoding: 'UTF-8', file: "${fileName}", text: "${listFilesString}"
 }
@@ -39,7 +39,7 @@ def mapDrive(config){
             currentBuild.result = 'UNSTABLE'
             message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
         } else {
-            debugMessage "mapDrive - Map network drive", mapStatus
+            debugMessage "utils.mapDrive - Map network drive", mapStatus
             message = "Successful"
         }
     }
@@ -54,7 +54,7 @@ def unmapDrive(config){
         currentBuild.result = 'UNSTABLE'
         message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
     } else {
-        debugMessage "unmapDrive - Unmap network drive", mapStatus
+        debugMessage "utils.unmapDrive - Unmap network drive", mapStatus
         message = "Successful"
     }
     return message
@@ -64,7 +64,7 @@ def unmapDrive(config){
 def loadPackage(fileList, dbo_credentials, db_server, db_name){
     def message = ''
     withCredentials([usernamePassword(credentialsId: dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
-            debugMessage "loadPackage - List of packages:", "${fileList}"
+            debugMessage "utils.loadPackage - List of packages:", "${fileList}"
             createFile "pldpkgload.pkglist"
             mapToFile(fileList, "pldpkgload.pkglist")
             def loadStatus = bat returnStatus: true, script: "C:\\Utils\\pldpkgload.exe -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${db_server} -d ${db_name} -r1 -b -f 65001 -i \"${WORKSPACE}\\pldpkgload.pkglist\""
@@ -72,7 +72,7 @@ def loadPackage(fileList, dbo_credentials, db_server, db_name){
                 currentBuild.result = 'FAILURE'
                 message = "An issue occurred when trying to load packages. Please review the logs"
             } else {
-                debugMessage "loadPackage - pldpkgload", loadStatus
+                debugMessage "utils.loadPackage - pldpkgload status", loadStatus
                 message = "Successful"
             }
     }
