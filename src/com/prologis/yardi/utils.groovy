@@ -37,7 +37,7 @@ def mapDrive(config){
         def mapStatus = bat returnStatus: true, script: "NET USE ${config.drive_letter}: \"${config.def_path}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
         if(mapStatus!=0){
             currentBuild.result = 'UNSTABLE'
-            notification.message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
+            message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
         } else {
             debugMessage "utils.mapDrive - Map network drive", mapStatus
             message = "Successful"
@@ -52,7 +52,7 @@ def unmapDrive(config){
     def mapStatus = bat returnStatus: true, script: "if exist ${config.drive_letter}:\\ (NET USE ${config.drive_letter}: /del /y)"
     if(mapStatus!=0){
         currentBuild.result = 'UNSTABLE'
-        notification.message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
+        message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
     } else {
         debugMessage "utils.unmapDrive - Unmap network drive", mapStatus
         message = "Successful"
