@@ -1,6 +1,24 @@
 #!/usr/bin/groovy
 package com.prologis.yardi
 
+import com.cloudbees.groovy.cps.NonCPS
+import org.jenkinsci.plugins.workflow.steps.MissingContextVariableException
+
+//Check if mandatory parameter is set
+@NonCPS
+def getMandatoryParameter(Map map, paramName, defaultValue = null) {
+
+    def paramValue = map[paramName]
+
+    if (paramValue == null)
+        paramValue = defaultValue
+
+    if (paramValue == null)
+        throw new Exception("ERROR - NO VALUE AVAILABLE FOR ${paramName}")
+    return paramValue
+
+}
+
 //Convert groovy map to list
 @NonCPS
 def mapToList(depmap) {
@@ -56,25 +74,6 @@ def unmapDrive(config){
     } else {
         debugMessage "utils.unmapDrive - Unmap network drive", mapStatus
         message = "Successful"
-    }
-    return message
-}
-
-
-def loadPackage(fileList, dbo_credentials, db_server, db_name){
-    def message = ''
-    withCredentials([usernamePassword(credentialsId: dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
-            debugMessage "utils.loadPackage - List of packages:", "${fileList}"
-            createFile "pldpkgload.pkglist"
-            mapToFile(fileList, "pldpkgload.pkglist")
-            def loadStatus = bat returnStatus: true, script: "C:\\Utils\\pldpkgload.exe -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${db_server} -d ${db_name} -r1 -b -f 65001 -i \"${WORKSPACE}\\pldpkgload.pkglist\""
-            if(loadStatus!=0){
-                currentBuild.result = 'FAILURE'
-                message = "An issue occurred when trying to load packages. Please review the logs"
-            } else {
-                debugMessage "utils.loadPackage - pldpkgload status", loadStatus
-                message = "Successful"
-            }
     }
     return message
 }
