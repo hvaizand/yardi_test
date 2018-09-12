@@ -1,6 +1,6 @@
 import groovy.transform.Field
 
-@Field def STEP_NAME = 'loadPackage'
+@Field def STEP_NAME = 'copyFiles'
 
 def call(Map parameters = [:]) {
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
