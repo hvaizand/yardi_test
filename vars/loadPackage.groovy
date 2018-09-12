@@ -1,6 +1,13 @@
 import groovy.transform.Field
 
 @Field def STEP_NAME = 'loadPackage'
+@Field Set STEP_CONFIG_KEYS = [
+    'dbo_credentials',
+    'db_server',
+    'db_name',
+    'pldpkgload'
+]
+@Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
 def call(Map parameters = [:]) {
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
