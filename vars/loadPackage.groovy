@@ -13,9 +13,9 @@ def call(Map parameters = [:]) {
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         def message = ''
         withCredentials([usernamePassword(credentialsId: parameters.dbo_credentials, passwordVariable: 'DBPASSWORD', usernameVariable: 'DBUSERNAME')]) {
-            debugMessage "loadPackage - List of packages:", "${parameters.fileList}"
+            debugMessage "loadPackage - List of packages:", "${parameters.filePackage}"
             createFile "pldpkgload.pkglist"
-            mapToFile(parameters.fileList, "pldpkgload.pkglist")
+            mapToFile(parameters.filePackage, "pldpkgload.pkglist")
             def returnStatus = bat returnStatus: true, script: "C:\\Utils\\pldpkgload.exe -U ${DBUSERNAME} -P ${DBPASSWORD} -S ${parameters.db_server} -d ${parameters.db_name} -r1 -b -f 65001 -i \"${WORKSPACE}\\pldpkgload.pkglist\""
             if(returnStatus!=0){
                 currentBuild.result = 'FAILURE'
