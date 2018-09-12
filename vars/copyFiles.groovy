@@ -1,3 +1,7 @@
+import groovy.transform.Field
+
+@Field def STEP_NAME = 'loadPackage'
+
 def call(Map parameters = [:]) {
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         def message = ''
