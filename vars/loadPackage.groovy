@@ -23,7 +23,7 @@ def call(Map parameters = [:]) {
 
                 debugMessage "loadPackage - List of packages:", "${parameters.filePackage}"
                 
-                FileUtils.createFile(script, "pldpkgload.pkglist")
+                FileUtils.createFile(this, "pldpkgload.pkglist")
                 
                 mapToFile(parameters.filePackage, "pldpkgload.pkglist")
                 
