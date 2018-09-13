@@ -1,21 +1,29 @@
 import groovy.transform.Field
 
 @Field def STEP_NAME = 'copyFiles'
+@Field Set STEP_CONFIG_KEYS = [
+    'fileNames',
+    'targetDrive',
+    'count'
+]
+@Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
 def call(Map parameters = [:]) {
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
-        def message = ''
-        for (def e in mapToList(parameters.fileNames)){
-            echo "Copy report: ${e.value} to ${parameters.targetDrive}:\\"
-            def returnStatus = bat returnStatus: true, script: "COPY \"${e.value}\" ${parameters.targetDrive}:\\ /Y /Z"
-            if(returnStatus!=0){
-                currentBuild.result = 'FAILURE'
-                message = "An issue occurred when copying the report files. Please review the logs"
-            } else {
-                debugMessage "copyFile - copy status", returnStatus
-                message = "Successful"
-            }
-        }      
-        return message  
+        if(parameters.count!=0){
+
+            echo "Copying Report Files - ${parameters.count} files"
+
+            for (def e in mapToList(parameters.fileNames)){
+            
+                echo "Copy report: ${e.value} to ${parameters.targetDrive}:\\"
+            
+                if(bat(returnStatus: true, script: "COPY \"${e.value}\" ${parameters.targetDrive}:\\ /Y /Z") != 0) {
+                    error "[${STEP_NAME}] An issue occurred when copying the report files. Please review the logs - aborting ${STEP_NAME}"
+                }
+            } 
+        } else {
+            echo "Copying Files - No files to be copied"
+        }
     }
 }
