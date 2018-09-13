@@ -90,6 +90,7 @@ class FileUtils implements Serializable {
     }
 
     static createFile(script, fileName){
-        script.fileOperations([fileCreateOperation(fileContent: '', fileName: fileName)])
+        if (!fileName) throw new IllegalArgumentException("The parameter 'fileName' can not be null or empty.")
+        script.fileOperations([script.fileCreateOperation(fileContent: '', fileName: fileName)])
     }
 }
