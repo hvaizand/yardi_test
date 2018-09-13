@@ -90,6 +90,6 @@ class FileUtils implements Serializable {
     }
 
     static createFile(script, fileName){
-        fileOperations([fileCreateOperation(fileContent: '', fileName: fileName)])
+        script.fileOperations([fileCreateOperation(fileContent: '', fileName: fileName)])
     }
 }
