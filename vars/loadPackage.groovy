@@ -1,3 +1,5 @@
+import com.prologis.yardi.FileUtils
+
 import groovy.transform.Field
 
 @Field def STEP_NAME = 'loadPackage'
@@ -21,7 +23,7 @@ def call(Map parameters = [:]) {
 
                 debugMessage "loadPackage - List of packages:", "${parameters.filePackage}"
                 
-                createFile "pldpkgload.pkglist"
+                FileUtils.createFile(script, "pldpkgload.pkglist")
                 
                 mapToFile(parameters.filePackage, "pldpkgload.pkglist")
                 
