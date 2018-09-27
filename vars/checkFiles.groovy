@@ -23,7 +23,9 @@ def call(Map parameters = [:]){
                 debugMessage "File name full path: ", fileFullPath
                 def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
                 debugMessage "File extension: ", ext
-                if(fileFullPath.find(~/\\${parameters.environmentType}\\/)){
+                def regex = "^${parameters.environmentType}/"
+                def pattern = ~regex
+                if(commitFile.filename.find(pattern)){
                     switch(ext) {
                         case "pkg":
                             debugMessage "This is a package. The extension is ", ext
