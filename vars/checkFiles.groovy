@@ -57,8 +57,6 @@ def call(Map parameters = [:]){
                 }
             }
             return fileDetails
-        } else {
-            return ""
-        }
+        } 
     }
 }
