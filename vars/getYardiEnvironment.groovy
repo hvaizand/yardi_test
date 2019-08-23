@@ -1,24 +1,17 @@
 def call(environment){
     //Check labels
     //def environment = [name: 'unknown', module: 'unknown']
-    def countmodule = 0
     def countname = 0
     for (label in pullRequest.labels) {
         switch(label) {
-            case 'Module: Core':
-                environment.module = 'core'
-                countmodule += 1
-            break
-            case 'Module: ABF':
-                environment.module = 'abf'
-                countmodule += 1
-            break
             case 'Environment: Sandbox':
                 environment.name = 'sandbox'
+                environment.deploysbx = 'true'
                 countname += 1
             break
             case 'Environment: Development':
                 environment.name = 'dev'
+                environment.deploydev = 'true'
                 countname += 1
             break
             case 'Environment: Beta':
@@ -26,7 +19,9 @@ def call(environment){
                 countname += 1
             break
             case 'Environment: Test':
-                environment.name = 'test'
+                environment.name = 'dev-test'
+                environment.deploydev = 'true'
+                environment.deploytst = 'true'
                 countname += 1
             break
             case 'Environment: 2k16':
@@ -34,7 +29,14 @@ def call(environment){
                 countname += 1
             break
             case 'Environment: UAT':
-                environment.name = 'uat'
+                environment.name = 'dev-test-uat'
+                environment.deploydev = 'true'
+                environment.deploytst = 'true'
+                environment.deployuat = 'true'
+                countname += 1
+            break
+            case 'Environment: Upgrade':
+                environment.name = 'upg'
                 countname += 1
             break
         }
@@ -56,16 +58,12 @@ def call(environment){
         }
         environment.listLabels.add(label)
     }
-    if(countmodule>1) {
-        environment.module = 'multiple'
-    }
-    if(countname>1) {
-        environment.name = 'multiple'
-    }
     //Check target branch
     environment.targetBranch = getTargetEnvironment CHANGE_TARGET
 
     environment.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
+
+    echo "yardi environment ==> ${environment}"
 
     return environment
 }
