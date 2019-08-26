@@ -6,8 +6,7 @@ import groovy.transform.Field
 @Field Set STEP_CONFIG_KEYS = [
     'credentials',
     'labels',
-    'comment',
-    'result'
+    'comment'
 ]
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
