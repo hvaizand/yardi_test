@@ -62,6 +62,7 @@ def call(environment){
     environment.targetBranch = getTargetEnvironment CHANGE_TARGET
 
     environment.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
+    environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed:') }
 
     echo "yardi environment ==> ${environment}"
 
