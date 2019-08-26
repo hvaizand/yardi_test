@@ -63,6 +63,7 @@ def call(environment){
 
     environment.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
     environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed:') }
+    environment.listLabels.removeAll { it.toLowerCase().startsWith('environment:') }
 
     echo "yardi environment ==> ${environment}"
 
