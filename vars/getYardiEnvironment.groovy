@@ -55,6 +55,8 @@ def call(environment){
                     environment.citype = 'force'
                 break
             }
+            environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed:') }
+            environment.listLabels.removeAll { it.toLowerCase().startsWith('environment:') }
         }
         environment.listLabels.add(label)
     }
@@ -62,8 +64,6 @@ def call(environment){
     environment.targetBranch = getTargetEnvironment CHANGE_TARGET
 
     environment.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
-    environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed:') }
-    environment.listLabels.removeAll { it.toLowerCase().startsWith('environment:') }
 
     echo "yardi environment ==> ${environment}"
 
