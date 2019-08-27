@@ -40,19 +40,19 @@ def call(environment){
                 countname += 1
             break
         }
-        if(environment.citype!='skip' && environment.citype!='force'){
+        if(environment.deployType!='skip' && environment.deployType!='force'){
             switch(label){
                 case 'CI: Skip':
-                    environment.citype = 'skip'
+                    environment.deployType = 'skip'
                 break
                 case 'CI: Test':
-                    environment.citype = 'test'
+                    environment.deployType = 'test'
                 break
                 case 'CI: Retest':
-                    environment.citype = 'test'
+                    environment.deployType = 'test'
                 break
                 case 'CI: Force':
-                    environment.citype = 'force'
+                    environment.deployType = 'force'
                 break
             }
             environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed:') }
