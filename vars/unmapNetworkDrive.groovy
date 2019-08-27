@@ -10,14 +10,14 @@ import groovy.transform.Field
 def call(Map parameters = [:]){
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         if(parameters.count!=0) {
-            def mapStatus = bat returnStatus: true, script: "if exist ${driveLetter}:\\ (NET USE ${driveLetter}: /del /y)"
+            def mapStatus = bat returnStatus: true, script: "if exist ${parameters.driveLetter}:\\ (NET USE ${parameters.driveLetter}: /del /y)"
             if(mapStatus!=0){
                 currentBuild.result = 'UNSTABLE'
-                message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
+                parameters.message = "An issue occurred when trying to unmap the network drive pointing to the default path. Contact your admin"
             } else {
-                message = "Successful"
+                parameters.message = "Successful"
             }
-            debugMessage "unmapNetworkDrive - Unmap network drive", message             
+            debugMessage "unmapNetworkDrive - Unmap network drive", parameters.message             
         }
     }
 }

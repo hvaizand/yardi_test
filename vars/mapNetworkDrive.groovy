@@ -17,12 +17,12 @@ def call(Map parameters = [:]){
                 def mapStatus = bat returnStatus: true, script: "NET USE ${parameters.driveLetter}: \"${parameters.defPath}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
                 if(mapStatus!=0){
                     currentBuild.result = 'UNSTABLE'
-                    message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
+                    parameters.message = "An issue occurred when trying to map the network drive pointing to the default path. Please update your RDP password in Jenkins"
                 } else {
-                    message = "Successful"
+                    parameters.message = "Successful"
                 }
             }
-            debugMessage "Map Network Drive", message
+            debugMessage "Map Network Drive", parameters.message
         }
     }
 }
