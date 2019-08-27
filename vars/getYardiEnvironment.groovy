@@ -1,92 +1,123 @@
-def call(environment){
-    //Check labels
-    //def environment = [name: 'unknown', module: 'unknown']
-    def countname = 0
-    def environmentList = []
-    for (label in pullRequest.labels) {
-        switch(label) {
-            case 'Environment: Sandbox':
-                environment.name = 'sandbox'
-                environment.deploysbx = 'true'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: sbx') }
-                environmentList.add(environment.name)
-                countname += 1
-            break
-            case 'Environment: Development':
-                environment.name = 'dev'
-                environment.deploydev = 'true'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: dev') }
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: tst') }
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: uat') }
-                environmentList.add(environment.name)
-                countname += 1
-            break
-            case 'Environment: Beta':
-                environment.name = 'beta'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: beta') }
-                environmentList.add(environment.name)
-                countname += 1
-            break
-            case 'Environment: Test':
-                environment.name = 'dev-test'
-                environment.deploydev = 'true'
-                environment.deploytst = 'true'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: dev') }
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: tst') }
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: uat') }
-                environmentList.add(environment.name)
-                countname += 1
-            break
-            case 'Environment: 2k16':
-                environment.name = '2k16'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: 2k16') }
-                environmentList.add(environment.name)
-                countname += 1
-            break
-            case 'Environment: UAT':
-                environment.name = 'dev-test-uat'
-                environment.deploydev = 'true'
-                environment.deploytst = 'true'
-                environment.deployuat = 'true'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: dev') }
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: tst') }
-                environmentList.add(environment.name)
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: uat') }
-                countname += 1
-            break
-            case 'Environment: Upgrade':
-                environment.name = 'upg'
-                environment.listLabels.removeAll { it.toLowerCase().startsWith('deployed: upg') }
-                environmentList.add(environment.name)
-                countname += 1
-            break
-        }
-        if(environment.deployType!='skip' && environment.deployType!='force'){
-            switch(label){
-                case 'CI: Skip':
-                    environment.deployType = 'skip'
-                break
-                case 'CI: Test':
-                    environment.deployType = 'test'
-                break
-                case 'CI: Retest':
-                    environment.deployType = 'test'
-                break
-                case 'CI: Force':
-                    environment.deployType = 'force'
-                break
+import com.prologis.yardi.FileUtils
+
+import groovy.transform.Field
+
+@Field def STEP_NAME = 'getYardiEnvironment'
+@Field Set STEP_CONFIG_KEYS = [
+    'name',
+    'module',
+    'deployType',
+    'targetBranch',
+    'listLabels',
+    'branchType',
+    'deploydev',
+    'deploytst',
+    'deployuat',
+    'deploysbx'
+]
+@Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
+
+def call(Map parameters = [:]){
+    handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
+        if(parameters.count!=0) {
+            //Check labels
+            //def environment = [name: 'unknown', module: 'unknown']
+            def countname = 0
+            def environmentList = []
+            for (label in pullRequest.labels) {
+                switch(label) {
+                    case 'Environment: Sandbox':
+                        parameters.name = 'sandbox'
+                        parameters.deploysbx = 'true'
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    case 'Environment: Development':
+                        parameters.name = 'dev'
+                        parameters.deploydev = 'true'
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    case 'Environment: Beta':
+                        parameters.name = 'beta'
+                        parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: beta') }
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    case 'Environment: Test':
+                        parameters.name = 'dev-test'
+                        parameters.deploydev = 'true'
+                        parameters.deploytst = 'true'
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    case 'Environment: 2k16':
+                        parameters.name = '2k16'
+                        parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: 2k16') }
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    case 'Environment: UAT':
+                        parameters.name = 'dev-test-uat'
+                        parameters.deploydev = 'true'
+                        parameters.deploytst = 'true'
+                        parameters.deployuat = 'true'
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    case 'Environment: Upgrade':
+                        parameters.name = 'upg'
+                        parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: upg') }
+                        environmentList.add(parameters.name)
+                        countname += 1
+                    break
+                    //Set deployType to skip based on Status label.
+                    case 'Status: Accepted':
+                    case 'Status: Abandoned':
+                    case 'Status: Completed':
+                    case 'Status: On Hold':
+                    case 'Status: Revision Needed':
+                        parameters.deployType = 'skip'
+                    break
+                }
+                if(parameters.deployType!='skip' && parameters.deployType!='force'){
+                    switch(label){
+                        case 'CI: Skip':
+                            parameters.deployType = 'skip'
+                        break
+                        case 'CI: Test':
+                            parameters.deployType = 'test'
+                        break
+                        case 'CI: Retest':
+                            parameters.deployType = 'test'
+                        break
+                        case 'CI: Force':
+                            parameters.deployType = 'force'
+                        break
+                    }
+                }
+                parameters.listLabels.add(label)
             }
-        }
-        environment.listLabels.add(label)
+            //Check target branch
+            parameters.targetBranch = getTargetEnvironment CHANGE_TARGET
+
+            //Remove labels only if not skip
+            if(parameters.deployType!='skip'){
+                if(parameters.deploysbx){
+                    parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: sbx') }
+                }
+                if(parameters.deploydev && parameters.deploytst && parameters.deployuat){
+                        parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: dev') }
+                        parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: tst') }
+                        parameters.listLabels.removeAll { it.toLowerCase().startsWith('deployed: uat') }
+                }
+                parameters.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
+                parameters.listLabels.removeAll { it.toLowerCase().startsWith('environment:') }
+            }
+
+            echo "yardi list environments ==> ${environmentList}"
+            echo "yardi environment ==> ${parameters}"
+
+        } 
     }
-    //Check target branch
-    environment.targetBranch = getTargetEnvironment CHANGE_TARGET
-
-    environment.listLabels.removeAll { it.toLowerCase().startsWith('ci:') }
-    environment.listLabels.removeAll { it.toLowerCase().startsWith('environment:') }
-
-    echo "yardi list environments ==> ${environmentList}"
-    echo "yardi environment ==> ${environment}"
-
-    return environment
 }
