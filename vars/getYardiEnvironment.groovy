@@ -67,9 +67,6 @@ def call(environment){
                 case 'CI: Force':
                     environment.deployType = 'force'
                 break
-                default:
-                    environment.deployType = 'skip'
-                break
             }
             environment.listLabels.removeAll { it.toLowerCase().startsWith('environment:') }
         }
