@@ -6,7 +6,7 @@ import groovy.transform.Field
 @Field Set STEP_CONFIG_KEYS = [
     'credentials',
     'labels',
-    'comment'
+    'message'
 ]
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
@@ -17,7 +17,7 @@ def call(Map parameters = [:]){
         //        pullRequest.addLabels(parameters.labels)
                 pullRequest.labels = parameters.labels
                 pullRequest.addLabels(parameters.labels)
-                def comment = pullRequest.comment(parameters.comment)
+                def comment = pullRequest.comment(parameters.message)
             }
         } 
     }
