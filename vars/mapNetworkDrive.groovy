@@ -13,7 +13,6 @@ def call(Map parameters = [:]){
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         if(parameters.count!=0) {
             withCredentials([usernamePassword(credentialsId: parameters.rdpUser, passwordVariable: 'RDPPASSWORD', usernameVariable: 'RDPUSERID')]) {
-                echo "NET USE ${parameters.driveLetter}: \"${parameters.defPath}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
                 def mapStatus = bat returnStatus: true, script: "NET USE ${parameters.driveLetter}: \"${parameters.defPath}\" \"${RDPPASSWORD}\" /USER:${RDPUSERID} /y"
                 if(mapStatus!=0){
                     currentBuild.result = 'UNSTABLE'
@@ -22,7 +21,7 @@ def call(Map parameters = [:]){
                     parameters.message = "Successful"
                 }
             }
-            debugMessage "Map Network Drive", parameters.message
+            debugMessage "mapNetworkDrive - Map Network Drive", parameters.message
         }
     }
 }
