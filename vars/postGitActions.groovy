@@ -14,9 +14,8 @@ def call(Map parameters = [:]){
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         if(parameters.count!=0) {
             withCredentials([usernamePassword(credentialsId: parameters.credentials, passwordVariable: 'password', usernameVariable: 'username')]) {
-        //        pullRequest.addLabels(parameters.labels)
                 pullRequest.labels = parameters.labels
-                pullRequest.addLabels(parameters.labels)
+                //pullRequest.addLabels(parameters.labels)
                 def comment = pullRequest.comment(parameters.message)
             }
         } 
