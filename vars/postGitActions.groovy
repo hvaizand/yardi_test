@@ -13,11 +13,13 @@ import groovy.transform.Field
 def call(Map parameters = [:]){
     handlePipelineStepErrors(stepName: STEP_NAME, stepParameters: parameters) {
         if(parameters.count!=0) {
-            withCredentials([usernamePassword(credentialsId: parameters.credentials, passwordVariable: 'password', usernameVariable: 'username')]) {
+            //withCredentials([usernamePassword(credentialsId: parameters.credentials, passwordVariable: 'password', usernameVariable: 'username')]) {
                 pullRequest.labels = parameters.labels
                 //pullRequest.addLabels(parameters.labels)
-                def comment = pullRequest.comment(parameters.message)
-            }
+                script{
+                    def comment = pullRequest.comment("${parameters.message}")
+                }
+            //}
         } 
     }
 }
