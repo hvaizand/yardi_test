@@ -1,5 +1,3 @@
-import com.prologis.yardi.FileUtils
-
 import groovy.transform.Field
 
 @Field def STEP_NAME = 'postGitActions'
@@ -16,9 +14,7 @@ def call(Map parameters = [:]){
             //withCredentials([usernamePassword(credentialsId: parameters.credentials, passwordVariable: 'password', usernameVariable: 'username')]) {
                 pullRequest.labels = parameters.labels
                 //pullRequest.addLabels(parameters.labels)
-                script{
-                    def comment = pullRequest.comment("${parameters.message}")
-                }
+                //def comment = pullRequest.comment("${parameters.message}")
             //}
         } 
     }
