@@ -16,16 +16,16 @@ def call(Map parameters = [:]){
             def fileDetails = [:]
             for (commitFile in pullRequest.files) {
                 debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
-                def file = commitFile.filename.toLowerCase()
-                debugMessage "File name lowercase: ", file
-                def fileFullPath = commitFile.filename
-                fileFullPath = translatePath("${WORKSPACE}\\" + fileFullPath)
-                debugMessage "File name full path: ", fileFullPath
-                def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
-                debugMessage "File extension: ", ext
                 def regex = "^${parameters.environmentType}/"
                 def pattern = ~regex
-                if(commitFile.filename.find(pattern)){
+                if(commitFile.filename.find(pattern) && commitFile.status!='removed'){
+                    def file = commitFile.filename.toLowerCase()
+                    debugMessage "File name lowercase: ", file
+                    def fileFullPath = commitFile.filename
+                    fileFullPath = translatePath("${WORKSPACE}\\" + fileFullPath)
+                    debugMessage "File name full path: ", fileFullPath
+                    def ext = commitFile.filename.substring(commitFile.filename.lastIndexOf('.') + 1, commitFile.filename.length()).toLowerCase()
+                    debugMessage "File extension: ", ext
                     switch(ext) {
                         case "pkg":
                             debugMessage "This is a package. The extension is ", ext
