@@ -1,6 +1,6 @@
 import groovy.transform.Field
 
-@Field def STEP_NAME = 'deploy'
+@Field def STEP_NAME = 'doDeploy'
 @Field Set STEP_CONFIG_KEYS = [
     'environmentType',
     'environment',
@@ -21,7 +21,7 @@ def call(Map parameters = [:]){
             script{
                 //Set configuration for ${parameters.environment}
                 def yardiConfig = setConfigEnvironmentVariables file: "./Jenkinsfiles/yardi_${parameters.environmentType}_${parameters.environment}.yml"
-                debugMessage "deploy - yardiConfig", "${yardiConfig}"
+                debugMessage "doDeploy - yardiConfig", "${yardiConfig}"
                 //Load packages
                 loadPackage(filePackage: parameters.filePackage, dbo_credentials: yardiConfig.dbo_credentials, db_server: yardiConfig.db_server, db_name: yardiConfig.db_name, count: parameters.countPackages)
                 //Copy report files
@@ -29,7 +29,7 @@ def call(Map parameters = [:]){
                 //Copy filter files to webshare
                 parameters.label.add('Deployed: ' + yardiConfig.shortname) 
             }
-            debugMessage "deploy - Deploy changes", parameters.message
+            debugMessage "doDeploy - Deploy changes", parameters.message
         }
     }
 }
