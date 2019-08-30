@@ -16,8 +16,10 @@ def call(Map parameters = [:]){
             def fileDetails = [:]
             for (commitFile in pullRequest.files) {
                 debugMessage "SHA: ${commitFile.sha} File Name: ${commitFile.filename} Status: ${commitFile.status}", ''
+                //Include only files from the Core or ABF folder depending on the module
                 def regex = "^${parameters.environmentType}/"
                 def pattern = ~regex
+                //Excluding removed files as well
                 if(commitFile.filename.find(pattern) && commitFile.status!='removed'){
                     def file = commitFile.filename.toLowerCase()
                     debugMessage "File name lowercase: ", file
@@ -58,6 +60,7 @@ def call(Map parameters = [:]){
                     }
                 }
             }
+            createFile (fileType: parameters.fileType, fileList: fileDetails)
             return fileDetails
         } 
     }

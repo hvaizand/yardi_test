@@ -23,7 +23,7 @@ def call(Map parameters = [:]){
                 def yardiConfig = setConfigEnvironmentVariables file: "./Jenkinsfiles/yardi_${parameters.environmentType}_${parameters.environment}.yml"
                 debugMessage "doDeploy - yardiConfig", "${yardiConfig}"
                 //Load packages
-                loadPackage(filePackage: parameters.filePackage, dbo_credentials: yardiConfig.dbo_credentials, db_server: yardiConfig.db_server, db_name: yardiConfig.db_name, count: parameters.countPackages)
+                loadPackage(dbo_credentials: yardiConfig.dbo_credentials, db_server: yardiConfig.db_server, db_name: yardiConfig.db_name)
                 //Copy report files
                 copyFiles (fileNames: parameters.fileReport, targetDrive: parameters.driveLetter, targetFolder: yardiConfig.def_path, count: parameters.countReports)
                 //Copy filter files to webshare
