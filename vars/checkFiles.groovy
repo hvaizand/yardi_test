@@ -19,10 +19,8 @@ def call(Map parameters = [:]){
                 //Include only files from the Core or ABF folder depending on the module
                 def regex = "^${parameters.environmentType}/"
                 def pattern = ~regex
-                //Excluding removed files as well
+                //Excluding removed files
                 if(commitFile.filename.find(pattern) && commitFile.status!='removed'){
-                    def file = commitFile.filename.toLowerCase()
-                    debugMessage "File name lowercase: ", file
                     def fileFullPath = commitFile.filename
                     fileFullPath = translatePath("${WORKSPACE}\\" + fileFullPath)
                     debugMessage "File name full path: ", fileFullPath
@@ -36,6 +34,7 @@ def call(Map parameters = [:]){
                                 fileDetails[counterFiles] = fileFullPath
                             }
                         break
+                        //List all type of report files based on extension
                         case "txt":
                         case "inc":
                         case "doc":
