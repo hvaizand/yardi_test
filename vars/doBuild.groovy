@@ -12,6 +12,7 @@ def call(Map parameters = [:]) {
         if(parameters.count!=0) {
             def fileList = [:]
             def fileCount = 0
+            
             fileList = checkFiles (fileType: parameters.fileType, environmentType: parameters.module)
             fileCount = fileList.size()
 

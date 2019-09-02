@@ -5,11 +5,10 @@ import groovy.transform.Field
     'environmentType',
     'environment',
     'driveLetter',
-    'defPath',
-    'filePackage',
     'countPackages',
-    'fileReport',
     'countReports',
+    'countOthers',
+    'message',
     'label'
 ]
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
@@ -23,10 +22,17 @@ def call(Map parameters = [:]){
                 def yardiConfig = setConfigEnvironmentVariables file: "./Jenkinsfiles/yardi_${parameters.environmentType}_${parameters.environment}.yml"
                 debugMessage "doDeploy - yardiConfig", "${yardiConfig}"
                 //Load packages
-                loadPackage(dbo_credentials: yardiConfig.dbo_credentials, db_server: yardiConfig.db_server, db_name: yardiConfig.db_name)
+                if(parameters.countPackages!=0){
+                    loadPackage(dbo_credentials: yardiConfig.dbo_credentials, db_server: yardiConfig.db_server, db_name: yardiConfig.db_name)
+                }
                 //Copy report files
-                copyFiles (fileNames: parameters.fileReport, targetDrive: parameters.driveLetter, targetFolder: yardiConfig.def_path, count: parameters.countReports)
-                //Copy filter files to webshare
+                if(parameters.countReports!=0){
+                    copyFiles (fileType: "Report", targetDrive: parameters.driveLetter, targetFolder: yardiConfig.def_path)
+                }
+                //Copy files to webshare - TODO
+                // if(parameters.countOthers!=0){
+                    // copyFiles (fileType: "Other", targetDrive: parameters.driveLetter, targetFolder: yardiConfig.def_path)
+                // }
                 parameters.label.add('Deployed: ' + yardiConfig.shortname) 
             }
             debugMessage "doDeploy - Deploy changes", parameters.message

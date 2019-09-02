@@ -5,7 +5,7 @@ import groovy.transform.Field
 @Field def STEP_NAME = 'createFile'
 @Field Set STEP_CONFIG_KEYS = [
     'fileType',
-    'fileList'
+    'fileContent'
 ]
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
@@ -16,7 +16,7 @@ def call(Map parameters = [:]) {
             if(parameters.fileType!="Other") {
                 echo "Create ${parameters.fileType} file"
 
-                debugMessage "createFile - List of files", "${parameters.fileList}"
+                debugMessage "createFile - List of files", "${parameters.fileContent}"
                 
                 def fileName = ""
 
@@ -31,7 +31,7 @@ def call(Map parameters = [:]) {
 
                 FileUtils.createFile(this, "${fileName}")
                 
-                mapToFile(parameters.fileList, "${fileName}")
+                mapToFile(parameters.fileContent, "${fileName}")
             }
             
         } else {

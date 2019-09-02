@@ -60,7 +60,7 @@ def call(Map parameters = [:]){
                     }
                 }
             }
-            createFile (fileType: parameters.fileType, fileList: fileDetails)
+            createFile (fileType: parameters.fileType, fileContent: fileDetails)
             return fileDetails
         } 
     }
